@@ -1,12 +1,16 @@
-import React from 'react';
-import { Button } from '@mantine/core';
+import React, { useState } from "react";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
+import ThemeChanger from "./components/globals/ThemeChanger";
+import { themeProperties } from "./constants/theme";
 
 function App() {
   return (
-    <div>
-      This is the app
-      <Button>Mantine btn</Button>
-    </div>
+    <MantineProvider defaultColorScheme="light" theme={themeProperties}>
+      <div className="d-flex items-center justify-center w-full h-screen">
+        <ThemeChanger />
+      </div>
+    </MantineProvider>
   );
 }
 
