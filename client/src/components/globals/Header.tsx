@@ -1,53 +1,50 @@
 import React, { useEffect } from "react";
-import { useColorScheme, useDisclosure } from "@mantine/hooks";
 import ThemeChanger from "./ThemeChanger";
-import { AppShell, Burger, Button } from "@mantine/core";
 import { useTheme } from "../../contexts/themeContext";
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
-  const [opened, { toggle }] = useDisclosure();
-  const { theme } = useTheme();
-  const colorScheme = useColorScheme();
+  const { isDark } = useTheme();
 
   return (
     <div>
-      <AppShell
-        header={{ height: 80 }}
-        padding="10"
-        navbar={{
-          width: 300,
-          breakpoint: "sm",
-          collapsed: { mobile: !opened },
-        }}
-        withBorder={false}
+      <div
+        className={`${
+          isDark ? "bg-darkBlue" : "bg-transparent"
+        } h-full flex items-center px-6 py-6`}
       >
-        <AppShell.Header>
+        <div className="container mx-auto flex justify-between items-center">
           <div
             className={`${
-              theme === "dark" ? "bg-black" : "bg-transparent"
-            } h-full flex items-center`}
+              isDark ? "text-white" : "text-darkBlue"
+            } text-3xl font-poppins font-semibold`}
           >
-            <div className="container mx-auto flex justify-between items-center">
-              <div
-                className={`${
-                  theme === "dark" ? "text-white" : "text-black"
-                } text-3xl`}
-              >
-                MernNews
-              </div>
-              <div className="flex gap-5 items-center">
-                <ThemeChanger />
-                <Burger
-                  opened={opened}
-                  onClick={toggle}
-                  hiddenFrom="sm"
-                  size="sm"
-                />
-              </div>
-            </div>
+            MernNews
           </div>
-        </AppShell.Header>
-      </AppShell>
+
+          <div className="flex gap-5 items-center">
+            <Link to="/sign-in">
+              <button
+                className={`${
+                  isDark ? "btn-primary-dark" : "btn-primary-light"
+                }`}
+              >
+                Sign in
+              </button>
+            </Link>
+            <Link to="/sign-up">
+              <button
+                className={`${
+                  isDark ? "btn-secondary-dark" : "btn-secondary-light"
+                }`}
+              >
+                Sign up
+              </button>
+            </Link>
+            <ThemeChanger />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Syne&display=swap");
+
 @layer utilities {
   .d-flex-center {
     @apply flex items-center justify-center;
@@ -13,5 +16,45 @@
 
   .d-flex-align-center {
     @apply flex items-center;
+  }
+
+  .btn-bg-white {
+    @apply px-10 py-3 bg-white rounded-full border-2 border-white font-poppins font-normal text-lightBlue text-base md:text-lg lg:text-lg hover:bg-transparent hover:text-white;
+  }
+
+
+  .btn-primary-dark {
+    @apply px-10 py-3 bg-lightBlue rounded-full border-2 border-lightBlue font-poppins font-normal text-white text-base md:text-lg lg:text-lg hover:bg-transparent;
+  }
+
+  .btn-primary-light {
+    @apply px-10 py-3 bg-darkBlue rounded-full border-2 border-darkBlue text-white font-poppins font-normal text-base md:text-lg lg:text-lg hover:bg-transparent hover:text-darkBlue;
+  }
+
+  .btn-secondary-dark {
+    @apply px-10 py-3 bg-transparent rounded-full border-2 border-lightBlue font-poppins font-normal text-white text-base md:text-lg lg:text-lg hover:bg-lightBlue hover:text-white;
+  }
+
+  .btn-secondary-light {
+    @apply px-10 py-3 bg-transparent rounded-full border-2 border-darkBlue font-poppins font-normal text-darkBlue text-base md:text-lg lg:text-lg hover:bg-darkBlue hover:text-white;
+  }
+
+  .heading-60 {
+    @apply font-poppins font-semibold text-4xl md:text-5xl lg:text-6xl;
+  }
+  .heading-48 {
+    @apply font-poppins font-semibold text-3xl md:text-4xl lg:text-5xl;
+  }
+  .heading-36 {
+    @apply font-poppins font-semibold text-2xl md:text-3xl lg:text-4xl;
+  }
+  .para-36 {
+    @apply font-syne font-normal text-2xl md:text-3xl lg:text-4xl;
+  }
+  .para-30 {
+    @apply font-syne font-normal text-2xl md:text-[26px] lg:text-[32px];
+  }
+  .para-20 {
+    @apply font-syne font-normal text-base md:text-lg lg:text-xl;
   }
 }

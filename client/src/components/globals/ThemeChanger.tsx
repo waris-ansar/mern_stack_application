@@ -9,16 +9,20 @@ import { Sun, Moon } from "@phosphor-icons/react";
 
 const ThemeChanger: React.FC = () => {
   const { colorScheme, setColorScheme } = useMantineColorScheme();
-  const { setTheme} = useTheme();
+  const { setIsDark } = useTheme();
   const computedColorScheme = useComputedColorScheme("light");
   const toggleColorScheme = (): void => {
     setColorScheme(computedColorScheme === "dark" ? "light" : "dark");
-    setTheme(computedColorScheme === "dark" ? "light" : "dark")
+    setIsDark(computedColorScheme === "dark" ? false : true);
   };
 
   useEffect(() => {
-    setTheme(computedColorScheme)
-  }, [])
+    if (computedColorScheme === "dark") {
+      setIsDark(true);
+    } else {
+      setIsDark(false);
+    }
+  }, []);
 
   return (
     <ActionIcon

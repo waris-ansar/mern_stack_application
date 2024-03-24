@@ -1,31 +1,31 @@
-import React, { useState,createContext, useContext } from "react";
+import React, { useState, createContext, useContext } from "react";
 
 interface ThemeContextType {
-  theme: string;
-  setTheme: (mode: string) => void;
+  isDark: boolean;
+  setIsDark: (mode: boolean) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-    const [theme, setTheme] = useState("light");
-  
-    const handleThemeCahnge = (currentTheme: string) => {
-      setTheme(currentTheme)
-    };
-  
-    return (
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        {children}
-      </ThemeContext.Provider>
-    );
+  const [isDark, setIsDark] = useState(false);
+
+  const handleThemeCahnge = (currentTheme: boolean) => {
+    setIsDark(currentTheme);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ isDark, setIsDark }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error("Use Theme must be wrapped inside the theme container");
   }
-  
-  export function useTheme() {
-    const context = useContext(ThemeContext);
-    if (context === undefined) {
-      throw new Error("Use Theme must be wrapped inside the theme container");
-    }
-  
-    return context;
-  }
+
+  return context;
+}
