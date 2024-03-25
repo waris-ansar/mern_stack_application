@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./styles/mantine.css";
 import App from "./App";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "./contexts/themeContext";
 import { BrowserRouter } from "react-router-dom";
 
@@ -14,6 +16,7 @@ root.render(
     <BrowserRouter>
       <ThemeProvider>
         <App />
+        <ToastContainer />
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
