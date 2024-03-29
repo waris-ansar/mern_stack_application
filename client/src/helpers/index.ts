@@ -33,7 +33,7 @@ const showToastMessage = (
   if (notificationType === "error") {
     toast.error(`Error! ${message}`, toastOptions);
   } else if (notificationType === "success") {
-    toast.error(`Error! ${message}`, toastOptions);
+    toast.success(`${message}`, toastOptions);
   }
 };
 //check for error
@@ -46,74 +46,80 @@ const successMessage = (message: string) => {
   showToastMessage(message, "success");
 };
 
-export const axiosGet = async (url: string, params?: any) => {
-  try {
-    let request = await axiosInstance.get(url, { params });
-    return request;
-  } catch (error: any) {
-    checkError(error);
-  }
-};
+// export const axiosGet = async (url: string, params?: any) => {
+//   try {
+//     let request = await axiosInstance.get(url, { params });
+//     return request;
+//   } catch (error: any) {
+//     checkError(error);
+//   }
+// };
 
-export const axiosPost = async (url: string, body: any, message: string) => {
-  try {
-    let request = await axiosInstance.post(url, body);
-    if (request.data && request.status === 200) {
-      await successMessage(message || "Data Added Successfully!");
-    }
-
-    return request;
-  } catch (error: any) {
-    checkError(error);
-  }
-};
-
-export const axiosPatch = async (url: string, body: any, message: string) => {
-  try {
-    let request = await axiosInstance.patch(url, body);
-    if (request.data && request.status === 200) {
-      await successMessage(message);
-    }
-  } catch (error) {
-    checkError(error);
-  }
-};
-
-export const axiosPut = async (url: string, body: any, message: string) => {
-  try {
-    let request = await axiosInstance.put(url, body);
-    if (request.data && request.status === 200) {
-      await successMessage(message);
-    }
-  } catch (error) {
-    checkError(error);
-  }
-};
-
-// const handleRequest = async (requestFunc, url, data, successMessage) => {
-//     try {
-//       const request = await requestFunc(url, data);
-//       if (request.data && request.status === 200) {
-//         showToastMessage(successMessage || "Operation Successful", "success");
-//       }
-//       return request;
-//     } catch (error) {
-//       handleRequestError(error);
-//       throw error;
+// export const axiosPost = async (url: string, body: any, message: string) => {
+//   try {
+//     let request = await axiosInstance.post(url, body);
+//     if (request.data && request.status === 200) {
+//       await successMessage(message || "Data Added Successfully!");
 //     }
-//   };
 
-//   const handleRequestError = (error) => {
-//     const message = error.response?.data?.message || "An error occurred";
-//     showToastMessage(message);
-//   };
+//     return request;
+//   } catch (error: any) {
+//     checkError(error);
+//   }
+// };
 
-//   export const axiosRequest = {
-//     get: (url, params) => handleRequest(axiosInstance.get, url, { params }),
-//     post: (url, data, successMessage) =>
-//       handleRequest(axiosInstance.post, url, data, successMessage),
-//     patch: (url, data, successMessage) =>
-//       handleRequest(axiosInstance.patch, url, data, successMessage),
-//     put: (url, data, successMessage) =>
-//       handleRequest(axiosInstance.put, url, data, successMessage),
-//   };
+// export const axiosPatch = async (url: string, body: any, message: string) => {
+//   try {
+//     let request = await axiosInstance.patch(url, body);
+//     if (request.data && request.status === 200) {
+//       await successMessage(message);
+//     }
+//   } catch (error) {
+//     checkError(error);
+//   }
+// };
+
+// export const axiosPut = async (url: string, body: any, message: string) => {
+//   try {
+//     let request = await axiosInstance.put(url, body);
+//     if (request.data && request.status === 200) {
+//       await successMessage(message);
+//     }
+//   } catch (error) {
+//     checkError(error);
+//   }
+// };
+
+const handleRequest = async (
+  requestFunc: any,
+  url: string,
+  data: any,
+  type: "get" | "post" | "patch" | "put",
+  successMessage?: string
+) => {
+  try {
+    const request = await requestFunc(url, data);
+    if (request.data && request.status === 200 && type !== "get") {
+      showToastMessage(successMessage || "Operation Successful", "success");
+    }
+    return request;
+  } catch (error) {
+    handleRequestError(error);
+    throw error;
+  }
+};
+
+const handleRequestError = (error: any) => {
+  checkError(error);
+};
+
+export const axiosRequest = {
+  get: (url: string, params?: any) =>
+    handleRequest(axiosInstance.get, url, { params }, "get"),
+  post: (url: string, data: any, successMessage: string) =>
+    handleRequest(axiosInstance.post, url, data, "post", successMessage),
+  patch: (url: string, data: any, successMessage: string) =>
+    handleRequest(axiosInstance.patch, url, data, "patch", successMessage),
+  put: (url: string, data: any, successMessage: string) =>
+    handleRequest(axiosInstance.put, url, data, "put", successMessage),
+};
