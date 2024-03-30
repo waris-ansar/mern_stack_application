@@ -17,10 +17,10 @@ export const signIn = createAsyncThunk(
 
 // sign up user
 export const signUp = createAsyncThunk(
-  "user/sign-up",
+  "users/sign-up",
   async (payload: signUpPayload, thunkAPI) => {
     const response = await axiosRequest.post(
-      "user/sign-up",
+      "users/sign-up",
       payload,
       "new account created"
     );

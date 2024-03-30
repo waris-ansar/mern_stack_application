@@ -48,6 +48,10 @@
   .heading-36 {
     @apply font-poppins font-semibold text-2xl md:text-3xl lg:text-4xl;
   }
+
+  .heading-28 {
+    @apply font-poppins font-semibold text-xl md:text-2xl lg:text-[28px];
+  }
   .para-36 {
     @apply font-syne font-normal text-2xl md:text-3xl lg:text-4xl;
   }

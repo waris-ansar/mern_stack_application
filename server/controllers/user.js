@@ -68,9 +68,9 @@ export const signUp = async (req, res) => {
 
     //refresh token
     const refreshToken = jwt.sign(
-      {email: existingUser.email, id: existingUser._id},
+      { email: result.email, id: result._id },
       "refreshToken",
-      {expiresIn: "1y"}
+      { expiresIn: "1y" }
     );
 
     res.status(200).json({ result: result, token: token, refreshToken  });
