@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { signIn, signUp } from "../api-thunk/user";
+import { signIn, signUp, getUser } from "../api-thunk/user";
 
 const usersSlice = createSlice({
   name: "users",
@@ -36,6 +36,19 @@ const usersSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
+      })
+      .addCase(getUser.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.authenticated = true;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = {};
+        state.authenticated = false;
       });
   },
 });

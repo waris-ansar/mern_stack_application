@@ -27,3 +27,12 @@ export const signUp = createAsyncThunk(
     return response.data;
   }
 );
+
+//get user by id
+export const getUser = createAsyncThunk(
+  "users/get-user",
+  async (id: string, thunkAPI) => {
+    const response = await axiosRequest.get(`users/${id}`);
+    return response.data;
+  }
+)
