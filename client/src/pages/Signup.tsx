@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTheme } from "../contexts/themeContext";
 import SignupForm from "../components/auth/SignupForm";
-
+import { useNavigate } from "react-router";
+import { useAppSelector } from "../redux";
 const Signup: React.FC = () => {
   const { isDark } = useTheme();
+  const navigate = useNavigate();
+  const { authenticated } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    navigate("/");
+  }, [authenticated]);
 
   return (
     <div

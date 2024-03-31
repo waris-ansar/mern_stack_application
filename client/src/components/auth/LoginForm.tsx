@@ -2,35 +2,27 @@ import React from "react";
 import { TextInput, PasswordInput, Box, Loader } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useTheme } from "../../contexts/themeContext";
-import { signUpPayload } from "../../types/auth";
+import { signInPayload } from "../../types/auth";
 import { useAppDispatch, useAppSelector } from "../../redux";
-import { signUp } from "../../redux/api-thunk/user";
+import { signIn } from "../../redux/api-thunk/user";
 
-const SignupForm: React.FC = () => {
+const LoginForm: React.FC = () => {
   const { isDark } = useTheme();
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.user);
-  const form = useForm<signUpPayload>({
+  const form = useForm<signInPayload>({
     initialValues: {
-      firstName: "",
-      lastName: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
 
     validate: {
-      firstName: (value) => (value.length >= 3 ? null : "Minimum 3 characters"),
-      lastName: (value) => (value.length >= 3 ? null : "Minimum 3 characters"),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) => (value.length >= 8 ? null : "Minimum 8 characters"),
-      confirmPassword: (value, values) =>
-        value !== values.password ? "Passwords did not match" : null,
     },
   });
 
-  const handleFormSubmit = (payload: signUpPayload) => {
-    dispatch(signUp(payload));
+  const handleFormSubmit = (payload: signInPayload) => {
+    dispatch(signIn(payload));
   };
 
   return (
@@ -39,25 +31,6 @@ const SignupForm: React.FC = () => {
         component="form"
         onSubmit={form.onSubmit((values) => handleFormSubmit(values))}
       >
-        <TextInput
-          className={`${
-            isDark ? "dark-custom-text-input" : "light-custom-text-input"
-          }`}
-          label="First Name"
-          placeholder="e.g; John"
-          withAsterisk
-          {...form.getInputProps("firstName")}
-        />
-        <TextInput
-          className={`${
-            isDark ? "dark-custom-text-input" : "light-custom-text-input"
-          }`}
-          label="Last Name"
-          placeholder="Doe"
-          withAsterisk
-          mt="md"
-          {...form.getInputProps("lastName")}
-        />
         <TextInput
           className={`${
             isDark ? "dark-custom-text-input" : "light-custom-text-input"
@@ -77,17 +50,6 @@ const SignupForm: React.FC = () => {
           withAsterisk
           mt="md"
           {...form.getInputProps("password")}
-        />
-
-        <PasswordInput
-          className={`${
-            isDark ? "dark-custom-text-input" : "light-custom-text-input"
-          }`}
-          label="Confirm Password"
-          placeholder="password"
-          withAsterisk
-          mt="md"
-          {...form.getInputProps("confirmPassword")}
         />
 
         <div className="mt-4">
@@ -111,4 +73,4 @@ const SignupForm: React.FC = () => {
   );
 };
 
-export default SignupForm;
+export default LoginForm;

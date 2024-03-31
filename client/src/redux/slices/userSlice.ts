@@ -18,7 +18,9 @@ const usersSlice = createSlice({
       })
       .addCase(signIn.fulfilled, (state, action) => {
         state.isLoading = false;
+        localStorage.setItem("user", JSON.stringify(action.payload));
         state.user = action.payload;
+        state.authenticated = true;
       })
       .addCase(signIn.rejected, (state, action) => {
         state.isLoading = false;
@@ -28,7 +30,9 @@ const usersSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.isLoading = false;
+        localStorage.setItem("user", JSON.stringify(action.payload));
         state.user = action.payload;
+        state.authenticated = true;
       })
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
