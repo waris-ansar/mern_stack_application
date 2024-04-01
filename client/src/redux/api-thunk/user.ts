@@ -9,7 +9,7 @@ export const signIn = createAsyncThunk(
     const response = await axiosRequest.post(
       "users/sign-in",
       payload,
-      "User Found!"
+      "Successfully loged in!"
     );
     return response.data;
   }
@@ -22,7 +22,7 @@ export const signUp = createAsyncThunk(
     const response = await axiosRequest.post(
       "users/sign-up",
       payload,
-      "new account created"
+      "Congrats! Created your account"
     );
     return response.data;
   }

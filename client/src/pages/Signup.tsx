@@ -9,7 +9,9 @@ const Signup: React.FC = () => {
   const { authenticated } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    navigate("/");
+    if (authenticated) {
+      navigate("/");
+    }
   }, [authenticated]);
 
   return (
