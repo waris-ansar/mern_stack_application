@@ -14,19 +14,19 @@ export const getPosts = async (req, res) => {
       .json({ message: "Limit must be less then equal to 20" });
   }
 
-  if(searchQuery && tags){
-    return res.status(400).json("Searching with query and tags at time")
+  if (searchQuery && tags) {
+    return res.status(400).json("Searching with query and tags at time");
   }
 
   let query = {}; // Empty query by default
 
-    if (searchQuery && searchQuery.trim().length > 0) {
-      query.title = new RegExp(searchQuery, "i");
-    }
-    if (tags && tags.trim().length > 0) {
-      const lowercaseTags = tags.split(",");
-      query.tags = { $in: lowercaseTags.map(tag => new RegExp(tag, "i")) };
-    }
+  if (searchQuery && searchQuery.trim().length > 0) {
+    query.title = new RegExp(searchQuery, "i");
+  }
+  if (tags && tags.trim().length > 0) {
+    const lowercaseTags = tags.split(",");
+    query.tags = { $in: lowercaseTags.map((tag) => new RegExp(tag, "i")) };
+  }
 
   try {
     const Limit = Number(limit) || 8;
@@ -97,7 +97,7 @@ export const updatePost = async (req, res) => {
   const post = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
-    return res.status(404).send("No Post with that id");
+    return res.status(404).send("No news with that id");
   }
 
   try {
@@ -110,7 +110,7 @@ export const updatePost = async (req, res) => {
     );
 
     if (!updatedPost) {
-      return res.status(404).send("No Post found with that id");
+      return res.status(404).send("No news found with that id");
     }
 
     res.json(updatedPost);
@@ -123,19 +123,19 @@ export const updatePost = async (req, res) => {
 export const deletePost = async (req, res) => {
   const { id: _id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(_id)) {
-    return res.status(404).send("No Post with that id");
+    return res.status(404).send("No news with that id");
   }
 
   try {
     await PostMessage.findByIdAndRemove(_id);
 
-    res.json({ message: "Post deleted successfully" });
+    res.json({ message: "news deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// like post 
+// like post
 export const likePost = async (req, res) => {
   const { id } = req.params;
 
@@ -167,7 +167,7 @@ export const likePost = async (req, res) => {
     res.json({
       status: "200",
       post: { updatedPost },
-      message: "Post liked successfully",
+      message: "News liked successfully",
     });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
@@ -175,19 +175,18 @@ export const likePost = async (req, res) => {
 };
 
 export const commentPost = async (req, res) => {
-
   const { id } = req.params;
   const { comment } = req.body;
 
-  if(!comment){
-    return res.status(400).json({message: "commet is required"})
+  if (!comment) {
+    return res.status(400).json({ message: "commet is required" });
   }
   if (!req.userId) {
     return res.status(401).json({ message: "Authorization token missing" });
   }
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).send("No post exist with this id");
+    return res.status(404).send("No news exist with this id");
   }
 
   try {
@@ -195,13 +194,11 @@ export const commentPost = async (req, res) => {
     post.comments.push({
       message: comment,
       author: req.id,
-    })
+    });
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(
-      id,
-      post,
-      { new: true }
-    );
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+      new: true,
+    });
 
     res.json({
       status: "200",
@@ -209,7 +206,25 @@ export const commentPost = async (req, res) => {
       message: "Comment added!",
     });
   } catch (error) {
-    console.log("err", error)
+    console.log("err", error);
     res.status(500).json({ message: "Server error" });
   }
-}
+};
+
+export const getPostById = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "Invalid news id" });
+  }
+
+  try {
+    const post = await PostMessage.findById(id);
+    if (!post) {
+      return res.status(400).json({ message: "No news with this id" });
+    }
+
+    return res.status(200).json({ data: post });
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+};
