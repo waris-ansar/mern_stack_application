@@ -46,7 +46,8 @@ export const getPosts = async (req, res) => {
     const posts = await PostMessage.find(query)
       .sort({ _id: -1 })
       .limit(Limit)
-      .skip(startIndex);
+      .skip(startIndex)
+      .populate("creator", "-password");
 
     // get all posts
     // const postMessages = await PostMessage.find();

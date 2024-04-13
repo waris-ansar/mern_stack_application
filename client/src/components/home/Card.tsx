@@ -11,7 +11,7 @@ interface PropsType {
 
 const Card: React.FC<PropsType> = ({ newsData }) => {
   const { isDark } = useTheme();
-  const { createdAt, message, name, _id, selectedFile: image } = newsData;
+  const { createdAt, message, creator, _id, selectedFile: image } = newsData;
 
   return (
     <div>
@@ -34,7 +34,7 @@ const Card: React.FC<PropsType> = ({ newsData }) => {
           <h6
             className={`heading-12 ${isDark ? "text-white" : "text-gray-900"}`}
           >
-            {`Created by: ${name}`}
+            {`Created by: ${creator.name}`}
           </h6>
           <Link to={`/news/${_id}`}>
             <div

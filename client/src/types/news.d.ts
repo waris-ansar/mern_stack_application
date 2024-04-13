@@ -19,7 +19,7 @@ export interface News {
   _id: string;
   createdAt: string;
   updatedAt: string;
-  creator: string;
+  creator: Creator;
   name: string;
   title: string;
   message: string;
@@ -33,4 +33,10 @@ export interface News {
 export interface Comment {
   createdAt: string;
   _id: string;
+}
+
+export interface Creator {
+  _id: string;
+  name: string;
+  email: string;
 }
