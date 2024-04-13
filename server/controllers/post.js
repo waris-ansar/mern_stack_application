@@ -218,7 +218,12 @@ export const getPostById = async (req, res) => {
   }
 
   try {
-    const post = await PostMessage.findById(id);
+    // const post = await PostMessage.findById(id);
+    const post = await PostMessage.findById(id).populate(
+      "creator",
+      "-password"
+    );
+    console.log(post, "this is the post");
     if (!post) {
       return res.status(400).json({ message: "No news with this id" });
     }
