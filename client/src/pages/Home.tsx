@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import WelocmeModal from "../components/modals/WelcomeModal";
 import { useAppDispatch, useAppSelector } from "../redux";
+import { Pagination } from "@mantine/core";
 import Card from "../components/home/Card";
 import { useTheme } from "../contexts/themeContext";
 import { getNews } from "../redux/api-thunk/news";
@@ -32,10 +33,10 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     dispatch(getNews(params));
-  }, []);
+  }, [params]);
 
   return (
-    <div className={`${isDark ? "bg-darkBlue" : "bg-white"}`}>
+    <div className={`${isDark ? "bg-darkBlue" : "bg-white"} min-h-screen`}>
       <div className="container mx-auto text-center py-10">
         <h1 className={`heading-36 ${isDark ? "text-white" : "text-gray-900"}`}>
           Live with Mern
@@ -46,8 +47,8 @@ const Home: React.FC = () => {
           Be aware of the latest what's going in world
         </p>
       </div>
-      <div className="container mx-auto">
-        <div className="grid grid-cols-3 gap-x-12 gap-y-10">
+      <div className="container mx-auto py-8">
+        <div className="grid grid-cols-4 gap-x-12 gap-y-20">
           {news.length > 0 ? (
             news.map((item: News) => {
               return <Card key={item._id} newsData={item} />;
@@ -58,6 +59,18 @@ const Home: React.FC = () => {
             </h3>
           )}
         </div>
+        {
+          <div className="my-12 ml-auto">
+            <Pagination
+              value={params.page}
+              onChange={(pageNo) =>
+                setParams((prev) => ({ ...prev, page: pageNo }))
+              }
+              total={10}
+              color={`${isDark ? "#555DFB" : "#0B002C"}`}
+            />
+          </div>
+        }
       </div>
 
       {showModal && <WelocmeModal showModal={showModal} />}

@@ -12,6 +12,7 @@ export interface NewsResponse {
   isLoading: boolean;
   isFetching: boolean;
   news: News[];
+  newsById: News;
 }
 
 export interface News {
@@ -24,7 +25,12 @@ export interface News {
   message: string;
   tags: string[];
   selectedFile: string;
-  likes: any[]; // define type for it later todo
-  comments: any[]; //define type for it late todo
+  likes: string[]; // define type for it later todo
+  comments: Comment[]; //define type for it late todo
   __v: number;
+}
+
+export interface Comment {
+  createdAt: string;
+  _id: string;
 }

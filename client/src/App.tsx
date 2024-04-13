@@ -8,6 +8,7 @@ import Header from "./components/globals/Header";
 import Home from "./pages/Home";
 import Signin from "./pages/Login";
 import Signup from "./pages/Signup";
+import News from "./pages/News";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<Signin />} />
         <Route path="/sign-up" element={<Signup />} />
+        <Route path="/news/:id" element={<News />} />
       </Routes>
     </MantineProvider>
   );

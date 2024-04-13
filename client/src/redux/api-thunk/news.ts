@@ -9,3 +9,11 @@ export const getNews = createAsyncThunk(
     return response.data as any;
   }
 );
+
+// get news by id 
+export const getNewsById = createAsyncThunk("getnew/using-id",
+  async(id: string, thunkAPI) => {
+    const response = await axiosRequest.get(`posts/${id}`)
+    return response.data
+  }
+)

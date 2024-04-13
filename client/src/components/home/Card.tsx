@@ -4,6 +4,7 @@ import moment from "moment";
 import { useTheme } from "../../contexts/themeContext";
 import { truncateMessage } from "../../helpers/global";
 import { News } from "../../types/news";
+import { Link } from "react-router-dom";
 interface PropsType {
   newsData: News;
 }
@@ -14,8 +15,8 @@ const Card: React.FC<PropsType> = ({ newsData }) => {
 
   return (
     <div>
-      <div className="img-container">
-        <img src={image} alt="post-img" />
+      <div className="img-container h-48">
+        <img src={image} alt="post-img" className="w-full h-48" />
       </div>
       <div className="content-container">
         <h4
@@ -35,13 +36,15 @@ const Card: React.FC<PropsType> = ({ newsData }) => {
           >
             {`Created by: ${name}`}
           </h6>
-          <div
-            className={`mt-3 flex justify-center items-center w-7 h-7 border rounded-md cursor-pointer ${
-              isDark ? "border-white" : "border-gray-900"
-            }`}
-          >
-            <ArrowRight size={20} color={`${isDark ? "#fff" : "#111827"}`} />
-          </div>
+          <Link to={`/news/${_id}`}>
+            <div
+              className={`mt-3 flex justify-center items-center w-7 h-7 border rounded-md cursor-pointer ${
+                isDark ? "border-white" : "border-gray-900"
+              }`}
+            >
+              <ArrowRight size={20} color={`${isDark ? "#fff" : "#111827"}`} />
+            </div>
+          </Link>
         </div>
       </div>
     </div>

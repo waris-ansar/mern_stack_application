@@ -90,3 +90,17 @@
 .mantine-InputWrapper-error {
   font-size: 16px !important;
 }
+
+.mantine-Pagination-root .mantine-Group-root{
+  justify-content: flex-end !important;
+}
+
+.mantine-Pagination-root .mantine-Group-root button{
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid #fff;
+}
+
+.mantine-Pagination-root .mantine-Group-root button[data-active="true"]{
+  background-color: #555dfb;
+}

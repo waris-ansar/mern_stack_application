@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getNews } from "../api-thunk/news";
+import { getNews, getNewsById } from "../api-thunk/news";
 
 const newsSlice = createSlice({
   name: "news-data",
@@ -7,6 +7,7 @@ const newsSlice = createSlice({
     isLoading: false,
     isFetching: false,
     news: [],
+    newsById: {},
     totalCount: 0,
     hasNextPage: false,
     hasPreviousPage: false,
@@ -26,6 +27,19 @@ const newsSlice = createSlice({
       })
       .addCase(getNews.rejected, (state, action) => {
         state.isFetching = false;
+      })
+
+      // getting particular news
+      .addCase(getNewsById.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getNewsById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.newsById = action.payload.data;
+      })
+      .addCase(getNewsById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.newsById = {};
       });
   },
 });
