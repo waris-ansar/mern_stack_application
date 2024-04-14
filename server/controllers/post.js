@@ -234,3 +234,62 @@ export const getPostById = async (req, res) => {
     return res.status(500).json({ message: error });
   }
 };
+
+export const getRelatedPost = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "Invalid news id" });
+  }
+
+  // try {
+  //   const post = await PostMessage.findById(id);
+  //   if (!post) {
+  //     return res.status(400).json({ message: "No news with this id" });
+  //   }
+
+  //   const relatedPsots = await PostMessage.find({
+  //     _id: { $ne: id },
+  //     tags: { $in: post.tags },
+  //   });
+
+  //   return res.status(200).json({ data: relatedPsots });
+  // } catch (error) {
+  //   return res.status(500).json({ message: error });
+  // }
+
+  try {
+    const post = await PostMessage.findById(id);
+    if (!post) {
+      return res.status(400).json({ message: "No news with this id" });
+    }
+
+    const relatedPosts = await PostMessage.aggregate([
+      {
+        $match: {
+          _id: { $ne: id },
+          tags: { $in: post.tags },
+        },
+      },
+      {
+        $addFields: {
+          matchedTags: {
+            $size: {
+              $setIntersection: [post.tags, "$tags"],
+            },
+          },
+        },
+      },
+      {
+        $sort: { matchedTags: -1 },
+      },
+    ]);
+
+    console.log(relatedPosts, "related post");
+
+    return res.status(200).json({ data: relatedPosts });
+  } catch (error) {
+    console.log(error, "this is the error");
+    return res.status(500).json({ message: error });
+  }
+};
