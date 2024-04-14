@@ -71,4 +71,7 @@
   .para-16 {
     @apply font-syne font-normal text-base;
   }
+  .para-14 {
+    @apply font-syne font-normal text-sm;
+  }
 }

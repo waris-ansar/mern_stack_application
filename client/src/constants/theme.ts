@@ -57,3 +57,10 @@ export const themeProperties = createTheme({
     },
   },
 });
+
+
+export const toastOptions: any = {
+  autoClose: 3000,
+  hideProgressBar: true,
+  style: { fontSize: "16px" },
+};

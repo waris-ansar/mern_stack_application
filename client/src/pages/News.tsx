@@ -24,8 +24,8 @@ const News: React.FC = () => {
       className={`${isDark ? "bg-darkBlue" : "bg-white"} min-h-screen pt-12`}
     >
       <div className="container mx-auto flex gap-16">
-        <div className="main-news-container w-[65%] h-7 border">
-          <NewsDetail />
+        <div className="main-news-container w-[65%]">
+          <NewsDetail newsDetail={newsById} />
         </div>
         <div className="sidebar-news-container w-[35%] h-7 border"></div>
       </div>
