@@ -27,10 +27,10 @@ const News: React.FC = () => {
       className={`${isDark ? "bg-darkBlue" : "bg-white"} min-h-screen pt-12`}
     >
       <div className="container mx-auto flex gap-24">
-        <div className="main-news-container w-[60%]">
+        <div className="main-news-container w-[70%]">
           <NewsDetail newsDetail={newsById} />
         </div>
-        <div className="sidebar-news-container w-[40%]">
+        <div className="sidebar-news-container w-[30%] ml-10">
           <h3
             className={`heading-36 ${isDark ? "text-white" : "text-gray-900"}`}
           >

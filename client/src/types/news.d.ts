@@ -13,6 +13,7 @@ export interface NewsResponse {
   isFetching: boolean;
   news: News[];
   newsById: News;
+  relatedNews: News[];
 }
 
 export interface News {
@@ -26,7 +27,7 @@ export interface News {
   tags: string[];
   selectedFile: string;
   likes: string[]; // define type for it later todo
-  comments: Comment[]; //define type for it late todo
+  comments: Comment[];
   __v: number;
 }
 
