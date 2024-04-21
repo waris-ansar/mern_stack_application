@@ -242,22 +242,6 @@ export const getRelatedPost = async (req, res) => {
     return res.status(404).json({ message: "Invalid news id" });
   }
 
-  // try {
-  //   const post = await PostMessage.findById(id);
-  //   if (!post) {
-  //     return res.status(400).json({ message: "No news with this id" });
-  //   }
-
-  //   const relatedPsots = await PostMessage.find({
-  //     _id: { $ne: id },
-  //     tags: { $in: post.tags },
-  //   });
-
-  //   return res.status(200).json({ data: relatedPsots });
-  // } catch (error) {
-  //   return res.status(500).json({ message: error });
-  // }
-
   try {
     const post = await PostMessage.findById(id);
     if (!post) {
@@ -282,6 +266,9 @@ export const getRelatedPost = async (req, res) => {
       },
       {
         $sort: { matchedTags: -1 },
+      },
+      {
+        $limit: 6,
       },
     ]);
 
